@@ -1,0 +1,132 @@
+// 아코디언
+
+// 기본 배경은 --color-bg (career의 회색 카드는 style.scss .career에서 오버라이드)
+@use "../shared";
+
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+
+  &__heading {
+    margin: 0;
+  }
+
+  &__item {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  &__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    width: 100%;
+    padding: var(--space-4) var(--space-6);
+    background: none;
+    border: none;
+    color: inherit;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+
+    &:focus-visible {
+      @extend %focus-ring;
+      outline-offset: -2px;
+    }
+
+    &[aria-expanded="true"] .accordion__icon {
+      transform: rotate(180deg);
+    }
+
+    &-text {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: var(--space-2) var(--space-4);
+    }
+  }
+
+  &__title {
+    font-weight: 600;
+  }
+
+  &__period {
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    color: var(--color-text-muted);
+    transition: transform 0.2s ease;
+  }
+
+  // 기본 "열림": JS 없이도 내용이 보이게. JS가 data-default-open 외 항목을 접음
+  &__panel {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows 0.3s ease;
+
+    &.is-collapsed {
+      grid-template-rows: 0fr;
+    }
+
+    &-inner {
+      overflow: hidden;
+      // min-height:0 필요: grid item 기본값(auto)이 0fr 접힘을 막아 내용이 잘려 보임
+      min-height: 0;
+
+      // 하단 여백은 마지막 자식에 줌 (panel-inner의 padding은 접혀도 남기 때문)
+      & > *:last-child {
+        padding-bottom: var(--space-4);
+      }
+    }
+  }
+
+  &__desc {
+    margin: 0;
+    padding: 0 var(--space-6);
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  // 제3자 후기(인용)와 직접 작성한 소개를 시각적으로 구분
+  &__quote {
+    margin: var(--space-3) var(--space-6) 0;
+    padding-left: var(--space-4);
+    border-left: 2px solid var(--color-accent);
+
+    & p {
+      margin: 0 0 var(--space-1);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      font-style: italic;
+      color: var(--color-text);
+    }
+
+    & footer {
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+    }
+
+    &-note {
+      margin-top: var(--space-2);
+      font-size: 0.8rem;
+      font-style: normal;
+      color: var(--color-text-muted);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accordion__panel,
+  .accordion__icon {
+    transition: none;
+  }
+}

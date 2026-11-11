@@ -1,0 +1,50 @@
+// 버튼
+
+// TODO: danger 버튼이 필요해지면 --outline을 바꾸지 말고 .btn--danger 모디파이어를 조합해서 확장
+
+@use "../shared";
+
+%btn-base {
+  // TODO: 좌우분할 등 다른 정렬이 필요하면 justify-content만 덮어쓰거나(.dropdown__trigger 방식),
+  // display/align-items를 자체 재선언하는 변형(.btn--left-icon 등)으로 처리
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: inherit;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  transition: var(--transition-theme), transform 0.15s ease;
+}
+
+.btn {
+  @extend %btn-base;
+  min-height: var(--btn-height);
+  padding: var(--space-2) var(--space-4);
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+
+  &:focus-visible {
+    @extend %focus-ring;
+  }
+
+  &--outline {
+    background: transparent;
+    border-color: var(--color-border);
+    color: var(--color-text);
+  }
+}
+
+.icon-btn {
+  @extend %btn-base;
+  width: var(--btn-height);
+  height: var(--btn-height);
+  background: transparent;
+  color: var(--color-text-muted);
+
+  &:hover,
+  &:focus-visible {
+    background: var(--color-bg-subtle);
+    color: var(--color-text);
+  }
+}

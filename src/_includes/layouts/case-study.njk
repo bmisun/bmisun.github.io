@@ -1,0 +1,25 @@
+---
+layout: layouts/base.njk
+---
+{# 본문이 헤더보다 좁아 우측에 목차(TOC) 배치. 항목은 main.js setupContentToc()가 클라이언트에서 생성
+   하고, 채우기 전엔 hidden (JS 꺼진 환경에서 빈 nav 방지) #}
+<article class="content-view case-study">
+  <p class="content-view__back"><a href="/case-studies/">← 케이스 스터디 목록</a></p>
+
+  <header class="content-view__header">
+    <h1 class="content-view__title">{{ title }}</h1>
+    {% if summary %}<p class="content-view__summary">{{ summary }}</p>{% endif %}
+    {% if tags %}
+    <ul class="content-view__tags">
+      {% for tag in tags %}<li class="content-view__tag">{{ tag }}</li>{% endfor %}
+    </ul>
+    {% endif %}
+  </header>
+
+  <div class="content-view__layout">
+    <div class="content-view__body">
+      {{ content | safe }}
+    </div>
+    <nav class="content-view__toc" aria-label="이 문서의 목차" hidden></nav>
+  </div>
+</article>

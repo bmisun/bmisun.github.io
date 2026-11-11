@@ -1,0 +1,7 @@
+node_modules/
+_site/
+.DS_Store
+
+# Sass 컴파일 결과물 — src/assets/scss/*.scss가 원본이고, 이 파일들은
+# npm run build/dev 때마다 새로 생성된다.
+src/assets/css/*.css

@@ -1,0 +1,48 @@
+---
+layout: layouts/base.njk
+extraStyles: demo-components.css
+---
+{# 레이아웃 체이닝(front matter의 layout 키) 사용. {% extends %}는 base.njk에 매칭되는 block이 없어서 동작하지 않았음 #}
+<article class="content-view component">
+  <p class="content-view__back"><a href="/#components">← 컴포넌트 목록</a></p>
+
+  <header class="content-view__header">
+    <h1 class="content-view__title">{{ title }}</h1>
+    {% if summary %}<p class="content-view__summary">{{ summary }}</p>{% endif %}
+    {% if tags %}
+    <ul class="content-view__tags">
+      {% for tag in tags %}<li class="content-view__tag">{{ tag }}</li>{% endfor %}
+    </ul>
+    {% endif %}
+  </header>
+
+  <div class="component__demo">
+    <p class="component__demo-label">라이브 데모 · 실제로 동작합니다</p>
+    <div class="component-demo component-demo--{{ page.fileSlug }}">
+      {% include "demos/" + page.fileSlug + ".njk" %}
+    </div>
+  </div>
+
+  <div class="content-view__layout">
+    <div class="content-view__body">
+      {{ content | safe }}
+    </div>
+    <nav class="content-view__toc" aria-label="이 문서의 목차" hidden></nav>
+  </div>
+
+  <div class="component__more">
+    <h2 class="component__more-heading">다른 컴포넌트</h2>
+    <ul class="component-more-list">
+      {% for cs in components %}
+      {% if cs.slug != page.fileSlug %}
+      <li class="component-more-list__item">
+        <a class="component-more-list__link" href="/components/{{ cs.slug }}/">
+          <span class="component-more-list__title">{{ cs.title }}</span>
+          <span class="component-more-list__summary">{{ cs.summary }}</span>
+        </a>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</article>

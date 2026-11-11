@@ -1,0 +1,37 @@
+  <main>
+    {# 정적 프리뷰라 aria-hidden + tabindex="-1"로 접근성 트리와 키보드 포커스에서 제외 #}
+    <div class="modal modal--static" aria-hidden="true">
+      <div class="modal__dialog">
+        <div class="modal__header">
+          <h2 class="modal__title">Modal</h2>
+          <button class="modal__close" type="button" tabindex="-1">&times;</button>
+        </div>
+        <div class="modal__body">
+          평소 화면 위에 떠 있는 형태로 나타납니다.<br />
+          ESC·배경 클릭·포커스 트랩처럼 실제로 열고 닫는 동작은  폼 모달 버튼을 눌러 확인할 수 있습니다.
+        </div>
+        <div class="modal__footer">
+          <button class="btn btn--outline" type="button" tabindex="-1">취소</button>
+          <button class="btn" type="button" tabindex="-1">확인</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal__actions">
+      <button class="btn" data-modal-target="form-modal">폼 모달 열어보기</button>
+    </div>
+  </main>
+
+  {# 홈에서 폼검증 데모와 동시에 렌더링되므로 id 충돌 방지용 "-modal" 접미사 (main.js와 연동) #}
+  <div class="modal" id="form-modal" data-modal aria-hidden="true">
+    <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="form-modal-title">
+      <div class="modal__header">
+        <h2 class="modal__title" id="form-modal-title" tabindex="-1">폼 모달</h2>
+        <button class="modal__close" type="button" data-modal-close aria-label="닫기">&times;</button>
+      </div>
+      <div class="modal__body">
+        {% set idSuffix = "-modal" %}
+        {% include "demos/form-validation.njk" %}
+      </div>
+    </div>
+  </div>

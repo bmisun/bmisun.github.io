@@ -1,0 +1,17 @@
+{
+  "name": "portfolio-site",
+  "version": "0.1.0",
+  "description": "웹퍼블리셔 포트폴리오 사이트 (11ty 정적 사이트)",
+  "scripts": {
+    "sass:build": "sass src/assets/scss:src/assets/css --no-source-map",
+    "sass:watch": "sass --watch src/assets/scss:src/assets/css",
+    "dev": "concurrently -n sass,11ty -c blue,green \"npm:sass:watch\" \"eleventy --serve\"",
+    "build": "npm run sass:build && eleventy"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.1",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
+    "concurrently": "^9.1.0",
+    "sass": "^1.83.0"
+  }
+}

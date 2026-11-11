@@ -1,0 +1,97 @@
+// 폼
+@use "../shared";
+
+.form {
+  // 폼은 max-width로 적정 폭 유지 (좁은 부모 안에서 줄어들도록 고정 width 대신 사용)
+  width: 100%;
+  max-width: 460px;
+  margin-inline: auto;
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-2) 0;
+
+    & > div {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-2);
+    }
+
+    & label {
+      display: block;
+      width: 5em;
+      flex-shrink: 0;
+      padding-top: var(--space-2);
+      color: var(--color-text-muted);
+      font-size: 0.9rem;
+    }
+  }
+
+  &__error {
+    margin-top: var(--space-1);
+    padding: 2px var(--space-2);
+    border-radius: var(--radius-sm);
+    font-size: 0.8em;
+
+    &--success {
+      background: var(--color-success-bg);
+      color: var(--color-success);
+    }
+
+    &--fail {
+      background: var(--color-danger-bg);
+      color: var(--color-danger);
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+  }
+
+  &__input-wrap {
+    position: relative;
+    display: flex;
+    // min-width:0 필요: flex item 기본값(auto) 때문에 비밀번호 필드가 화면 밖으로 넘침
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__input-border {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+
+    & rect {
+      fill: none;
+      stroke-width: 2;
+      stroke-dasharray: 280;
+      stroke-dashoffset: 280;
+    }
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    min-width: 0;
+    font: inherit;
+    padding: var(--space-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg);
+    color: var(--color-text);
+
+    // 포커스 링과 SVG 유효성 테두리는 별개 레이어라 겹치지 않음
+    &:focus-visible {
+      @extend %focus-ring;
+    }
+  }
+
+  [aria-invalid="true"] + .form__input-border rect { stroke: var(--color-danger); }
+  [aria-invalid="false"] + .form__input-border rect { stroke: var(--color-success); }
+}

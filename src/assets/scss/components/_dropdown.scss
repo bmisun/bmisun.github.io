@@ -1,0 +1,70 @@
+// 드롭다운
+@use "../shared";
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+
+  *:focus-visible {
+    @extend %focus-ring;
+    position: relative;
+    z-index: 2;
+  }
+
+  &__trigger {
+    display: inline-flex;
+    align-items: center;
+
+    &[aria-expanded="true"] {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
+
+  &__icon {
+    // 장식 아이콘은 ::after 대신 aria-hidden 빈 요소로 표시
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 0.5em;
+    border: {
+      left: 0.3em solid transparent;
+      right: 0.3em solid transparent;
+      top: 0.35em solid var(--color-accent-contrast);
+    };
+    vertical-align: middle;
+  }
+
+  &__list {
+    display: none;
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    min-width: 100%;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+    list-style: none;
+    z-index: 1;
+  }
+
+  &__item {
+    width: 100%;
+    padding: var(--space-2) var(--space-3);
+    color: var(--color-text);
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: var(--color-bg-subtle);
+    }
+
+    &[aria-selected="true"]::after {
+      content: "✓";
+      float: right;
+      color: var(--color-accent);
+    }
+  }
+}

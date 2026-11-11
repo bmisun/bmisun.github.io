@@ -1,0 +1,146 @@
+---
+title: 홈
+layout: layouts/base.njk
+extraStyles: demo-components.css
+---
+
+<section class="hero">
+  <div class="hero__glow" aria-hidden="true"></div>
+  <div class="hero__content">
+    <h1 class="hero__title" data-hero-title>다양한 현장 경험과 깊은 판단으로 화면을 만듭니다</h1>
+    <p class="hero__subtitle" data-hero-subtitle>8년 넘게 다양한 서비스를 거치며 성능을 고려한 구현, 웹 접근성 검증, 확장 가능한 구조 설계까지 실무에서 다져온 판단력을 갖고 있습니다. 디자인 감각을 바탕으로 화면의 의도를 코드로 옮기고, 낯선 문제를 진단해 풀어가는 과정에 강점이 있습니다.</p>
+  </div>
+  <div class="hero__scroll-cue" aria-hidden="true"><span></span></div>
+</section>
+
+<section class="career" id="career">
+  <h2 class="career__heading">경력</h2>
+
+  <div class="career__group">
+    <h3 class="career__group-title">프리랜서 프로젝트</h3>
+    <div class="accordion">
+      {% for item in career.freelance %}
+      <div class="accordion__item"{% if loop.first %} data-default-open{% endif %}>
+        <h4 class="accordion__heading">
+          <button class="accordion__trigger" type="button" aria-expanded="{{ "true" if loop.first else "false" }}" aria-controls="freelance-panel-{{ loop.index }}" id="freelance-trigger-{{ loop.index }}">
+            <span class="accordion__trigger-text">
+              <span class="accordion__title">{{ item.title }}</span>
+              <span class="accordion__period">{{ item.period }}</span>
+            </span>
+            <svg class="accordion__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+          </button>
+        </h4>
+        <div class="accordion__panel" id="freelance-panel-{{ loop.index }}" role="region" aria-labelledby="freelance-trigger-{{ loop.index }}">
+          <div class="accordion__panel-inner">
+            <p class="accordion__desc">{{ item.desc }}</p>
+            {% if item.quote %}
+            <blockquote class="accordion__quote">
+              <p>&ldquo;{{ item.quote.text }}&rdquo;</p>
+              <footer>— {{ item.quote.source }}</footer>
+              {% if item.quote.note %}<p class="accordion__quote-note">{{ item.quote.note }}</p>{% endif %}
+            </blockquote>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="career__group">
+    <h3 class="career__group-title">정규직 이력</h3>
+    <div class="accordion">
+      {% for item in career.regular %}
+      <div class="accordion__item"{% if loop.first %} data-default-open{% endif %}>
+        <h4 class="accordion__heading">
+          <button class="accordion__trigger" type="button" aria-expanded="{{ "true" if loop.first else "false" }}" aria-controls="regular-panel-{{ loop.index }}" id="regular-trigger-{{ loop.index }}">
+            <span class="accordion__trigger-text">
+              <span class="accordion__title">{{ item.title }}</span>
+              <span class="accordion__period">{{ item.period }}</span>
+            </span>
+            <svg class="accordion__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+          </button>
+        </h4>
+        <div class="accordion__panel" id="regular-panel-{{ loop.index }}" role="region" aria-labelledby="regular-trigger-{{ loop.index }}">
+          <div class="accordion__panel-inner">
+            <p class="accordion__desc">{{ item.desc }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="career__group">
+    <h3 class="career__group-title">강의 경력</h3>
+    <div class="accordion">
+      <div class="accordion__item">
+        <h4 class="accordion__heading">
+          <button class="accordion__trigger" type="button" aria-expanded="false" aria-controls="teaching-panel-1" id="teaching-trigger-1">
+            <span class="accordion__trigger-text">
+              <span class="accordion__title">{{ career.teaching.title }}</span>
+              <span class="accordion__period">{{ career.teaching.period }}</span>
+            </span>
+            <svg class="accordion__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+          </button>
+        </h4>
+        <div class="accordion__panel" id="teaching-panel-1" role="region" aria-labelledby="teaching-trigger-1">
+          <div class="accordion__panel-inner">
+            <p class="accordion__desc">{{ career.teaching.desc }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="career__reference">{{ career.referenceCheck.prefix }}<br /><a href="{{ career.referenceCheck.url }}" target="_blank" rel="noopener">{{ career.referenceCheck.label }}</a></p>
+</section>
+
+<section class="component-list" id="components">
+  <h2 class="component-list__heading">컴포넌트 라이브러리</h2>
+  <div class="component-list__grid">
+    {% for cs in components %}
+    <div class="component-card">
+      {# 홈 미리보기는 실제 데모 마크업 재사용 (스크립트 없음, inert로 상호작용 차단) #}
+      <div class="component-card__preview component-demo component-demo--{{ cs.slug }}" inert aria-hidden="true">
+        {% include "demos/" + cs.slug + ".njk" %}
+      </div>
+      <div class="component-card__body">
+        <h3 class="component-card__title"><a class="component-card__link" href="/components/{{ cs.slug }}/">{{ cs.title }}</a></h3>
+        <p class="component-card__summary">{{ cs.summary }}</p>
+        <ul class="component-card__tags">
+          {% for tag in cs.tags %}<li class="component-card__tag">{{ tag }}</li>{% endfor %}
+        </ul>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <h2 class="contact__heading">소개</h2>
+  <p class="contact__lead">{{ contact.lead }}</p>
+  <ul class="contact__list">
+    {% for channel in contact.channels %}
+    <li class="contact__item">
+      <span class="contact__icon" aria-hidden="true">
+        {% if channel.icon == "email" %}
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+        {% elif channel.icon == "github" %}
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+        {% elif channel.icon == "blog" %}
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>
+        {% elif channel.icon == "linkedin" %}
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+        {% elif channel.icon == "phone" %}
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        {% else %}
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+        {% endif %}
+      </span>
+      <span class="contact__label">{{ channel.label }}</span>
+      <a class="contact__value" href="{{ channel.href }}">{{ channel.value }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+</section>

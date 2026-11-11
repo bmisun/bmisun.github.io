@@ -1,0 +1,23 @@
+---
+title: 케이스 스터디
+layout: layouts/base.njk
+---
+<section class="case-study-list">
+  <header class="case-study-list__header">
+    <h1 class="case-study-list__heading">케이스 스터디</h1>
+    <p class="case-study-list__lead">개별 컴포넌트가 아니라 프로젝트 단위로, 기획부터 기술 스택 선택·구현·배포까지의 과정을 담았습니다.</p>
+  </header>
+  <ul class="case-study-list__grid">
+    {% for cs in caseStudies %}
+    <li class="case-study-list__item">
+      <a class="case-study-list__link" href="/case-studies/{{ cs.slug }}/">
+        <span class="case-study-list__title">{{ cs.title }}</span>
+        <span class="case-study-list__summary">{{ cs.summary }}</span>
+        <ul class="case-study-list__tags">
+          {% for tag in cs.tags %}<li class="case-study-list__tag">{{ tag }}</li>{% endfor %}
+        </ul>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</section>

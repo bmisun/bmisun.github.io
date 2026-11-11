@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ title }} · {{ site.name }} 포트폴리오</title>
+  <meta name="description" content="{{ description or summary or (site.name + ' — ' + site.role + '. 반응형 마크업, 접근성, 인터랙션을 중심으로 직접 만든 컴포넌트 라이브러리 포트폴리오입니다.') }}">
+  <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/component.css">
+  {% if extraStyles %}<link rel="stylesheet" href="/assets/css/{{ extraStyles }}">{% endif %}
+  <script>
+    // FOUC 방지: 렌더링 전에 저장된 테마 적용
+    (function () {
+      try {
+        var saved = localStorage.getItem("theme");
+        var theme = saved || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  {% include "partials/header.njk" %}
+
+  <main class="app-main" id="main">
+    {{ content | safe }}
+  </main>
+
+  <script>
+    // FOUC 방지: 아코디언 CSS 기본값은 "열림"(JS 없이도 보이게)이라,
+    // 파싱 직후 data-default-open 없는 항목을 먼저 접음
+    (function () {
+      try {
+        document.querySelectorAll(".accordion__item:not([data-default-open])").forEach(function (item) {
+          var panel = item.querySelector(".accordion__panel");
+          if (panel) panel.classList.add("is-collapsed");
+        });
+      } catch (e) {}
+    })();
+  </script>
+
+  {% include "partials/footer.njk" %}
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script type="module" src="/assets/js/main.js"></script>
+</body>
+</html>

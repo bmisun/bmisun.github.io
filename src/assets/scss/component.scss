@@ -1,0 +1,8 @@
+// 컴포넌트 진입점. 새 컴포넌트는 여기에 @use 추가, 안 쓰는 건 줄과 파일 삭제
+@use "components/btn";
+@use "components/accordion";
+@use "components/tabs";
+@use "components/modal";
+@use "components/dropdown";
+@use "components/slider";
+@use "components/form";

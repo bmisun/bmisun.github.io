@@ -1,0 +1,87 @@
+// 모달
+@use "../shared";
+
+.modal {
+  position: fixed;
+  inset: 0;
+  // z-index 명시 필요: auto면 DOM 순서에 따라 sticky 목차 등에 가려질 수 있음
+  z-index: var(--z-overlay);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.55);
+
+  *:focus-visible {
+    @extend %focus-ring;
+  }
+
+  &__dialog {
+    width: min(90vw, 440px);
+    padding: var(--space-6);
+    background: var(--color-bg-elevated);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-md);
+  }
+
+  &__header {
+    position: relative;
+  }
+
+  &__title {
+    color: var(--color-accent);
+    font-size: 1.1rem;
+  }
+
+  &__close {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    width: 2em;
+    height: 2em;
+    border: none;
+    border-radius: 50%;
+    background: var(--color-bg-subtle);
+    color: var(--color-text-muted);
+    font-weight: bold;
+  }
+
+  &__body {
+    margin: var(--space-3) 0;
+    padding: var(--space-3) 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    text-align: left;
+
+    & form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    & input,
+    & select {
+      font: inherit;
+      padding: var(--space-2);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background: var(--color-bg);
+      color: var(--color-text);
+    }
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-2);
+  }
+
+  &--static {
+    position: static;
+    display: flex;
+    background: none;
+  }
+}

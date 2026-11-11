@@ -1,0 +1,114 @@
+// 슬라이더
+@use "../shared";
+
+.slider {
+  *:focus-visible {
+    @extend %focus-ring;
+  }
+
+  button {
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    font: inherit;
+  }
+
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 220px;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-4);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &__track {
+    display: flex;
+    height: 100%;
+  }
+
+  &__slide {
+    flex: 0 0 auto;
+  }
+
+  &__slide-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // 슬라이드별 폭/배경은 :nth-of-type 대신 인라인 커스텀 프로퍼티로 받음
+    // (복제본은 순번이 달라져 스타일을 잃기 때문)
+    width: var(--slide-width, 320px);
+    height: 220px;
+    font-size: 2.5rem;
+    background: var(--slide-bg, var(--color-accent));
+    color: var(--color-accent-contrast);
+  }
+
+  &__controller {
+    position: absolute;
+    bottom: var(--space-2);
+    right: var(--space-2);
+    display: flex;
+    gap: var(--space-1);
+  }
+
+  &__btn {
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.35);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 1rem;
+
+    &--control[data-state="playing"]:before { content: "⏸"; font-size: 0.8rem; }
+    &--control[data-state="paused"]:before { content: "▶"; font-size: 0.8rem; }
+  }
+
+  &__dots {
+    position: absolute;
+    left: 50%;
+    bottom: var(--space-2);
+    transform: translateX(-50%);
+    display: flex;
+    gap: var(--space-1);
+
+    & button {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+
+      &[aria-selected="true"] {
+        background: #fff;
+      }
+    }
+  }
+
+  // --paged(pingpong): 페이지 단위 이동은 점으로 위치를 표현할 수 없어, 점 대신 이전/다음 버튼 disabled로 경계 표시
+  &--paged {
+    .slider__btn--prev,
+    .slider__btn--next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+    .slider__btn--prev {
+      left: var(--space-2);
+    }
+    .slider__btn--next {
+      right: var(--space-2);
+    }
+    .slider__btn:disabled {
+      opacity: 0.35;
+      cursor: default;
+      pointer-events: none;
+    }
+  }
+}
